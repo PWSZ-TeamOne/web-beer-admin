@@ -1,15 +1,25 @@
 <template>
   <div>
-    <flash-message transitionIn="animated swing" class="alert-box"></flash-message>
+    <flash-message
+      transitionIn="animated swing"
+      class="alert-box"
+    ></flash-message>
     <div class="d-flex align-items-center login-box">
       <div class="m-auto">
-        <h2>{{this.text}}</h2>
-        <p class="text-danger">{{this.info}}</p>
+        <h2>{{ this.text }}</h2>
+        <p class="text-danger">{{ this.info }}</p>
         <br />
         <div class="md-form mb-5 text-left">
           <i class="fas fa-user prefix grey-text"></i>
           <label for="nickname">Email</label>
-          <input type="email" ref="email" id="email" class="form-control" v-model="email" required />
+          <input
+            type="email"
+            ref="email"
+            id="email"
+            class="form-control"
+            v-model="email"
+            required
+          />
         </div>
         <div class="md-form mb-5 text-left">
           <i class="fas fa-user prefix grey-text"></i>
@@ -23,7 +33,9 @@
             required
           />
         </div>
-        <button @click="register" id="register" class="btn-lg">Zarejestruj</button>
+        <button @click="register" id="register" class="btn-lg">
+          Zarejestruj
+        </button>
         <br />
         <br />
         <router-link to="/">
@@ -46,7 +58,7 @@ export default {
       text: "Rejestracja",
       info: "",
       password: null,
-      email: null
+      email: null,
     };
   },
   methods: {
@@ -54,7 +66,7 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(async result => {
+        .then(async (result) => {
           firebase
             .firestore()
             .collection("admins")
@@ -65,11 +77,11 @@ export default {
               pass: this.password,
               role: "admin",
             })
-            .then(docRef => {
+            .then((docRef) => {
               let loginData = {
                 userId: result.user.uid,
                 email: result.user.email,
-                role: result.user.role
+                role: result.user.role,
               };
               store.dispatch("setSession", loginData);
               this.$router.push({ path: "/users" });
@@ -81,8 +93,8 @@ export default {
         .catch(() => {
           this.alert("Rejestracja nie prawidłowa!", "error");
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

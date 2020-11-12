@@ -1,15 +1,25 @@
 <template>
   <div>
-    <flash-message transitionIn="animated swing" class="alert-box"></flash-message>
+    <flash-message
+      transitionIn="animated swing"
+      class="alert-box"
+    ></flash-message>
     <div class="d-flex align-items-center login-box">
       <div class="m-auto">
-        <h2>{{this.text}}</h2>
-        <p class="text-danger">{{this.info}}</p>
+        <h2>{{ this.text }}</h2>
+        <p class="text-danger">{{ this.info }}</p>
         <br />
         <div class="md-form mb-5 text-left">
           <i class="fas fa-user prefix grey-text"></i>
           <label for="nickname">Email</label>
-          <input type="email" ref="email" id="email" class="form-control" v-model="email" required />
+          <input
+            type="email"
+            ref="email"
+            id="email"
+            class="form-control"
+            v-model="email"
+            required
+          />
         </div>
         <div class="md-form mb-5 text-left">
           <i class="fas fa-user prefix grey-text"></i>
@@ -27,7 +37,9 @@
         <br />
         <br />
         <router-link to="/register">
-          <button id="register" class="btn-sm btn-info">Zarejestruj się!</button>
+          <button id="register" class="btn-sm btn-info">
+            Zarejestruj się!
+          </button>
         </router-link>
       </div>
     </div>
@@ -46,7 +58,6 @@ export default {
       text: "Logowanie",
       password: null,
       email: null,
-      info: "nie zalogowany"
     };
   },
   methods: {
@@ -54,7 +65,7 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(async result => {
+        .then(async (result) => {
           let user = result.user;
           if (user) {
             firebase
@@ -64,14 +75,13 @@ export default {
               .where("role", "==", "admin")
               .get()
               .then((querySnapshot) => {
-                querySnapshot.forEach(function(doc) {
+                querySnapshot.forEach(function (doc) {
                   const userData = doc.data();
                   store.dispatch("setSession", userData);
                 });
-                this.info= "zalogowany";
                 this.alert("Logowanie prawidłowe!", "success");
-                console.log('zalogowano');
-                this.$router.push("/users");
+                console.log("zalogowano");
+                this.$router.push("/users").catch(()=>{});;
               });
           }
         })
@@ -79,7 +89,7 @@ export default {
           this.alert("Logowanie nie prawidłowe, złe dane!", "error");
         });
     },
-  }
+  },
 };
 </script>
 

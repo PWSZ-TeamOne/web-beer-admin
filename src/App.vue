@@ -1,23 +1,29 @@
 <template>
   <div id="app">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <div class="main-wrapper">
       <div class="navbar-bg"></div>
-        <b-navbar toggleable="lg" type="dark" variant="info" v-if="this.$store.state.logged !== null">
-          <b-navbar-brand href="#">Menu</b-navbar-brand>
-          {{this.$store.state.logged}}
+      <b-navbar
+        toggleable="lg"
+        type="dark"
+        variant="info"
+        v-if="this.$store.state.logged !== null"
+      >
+        <b-navbar-brand>Menu</b-navbar-brand>
 
-          <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-          <b-collapse id="nav-collapse" is-nav>
-            <b-navbar-nav>
-              <b-nav-item href="#"><router-link to="/users">Users</router-link></b-nav-item>
-              <b-nav-item href="#"><router-link to="/meetings">Mettings</router-link></b-nav-item>
-              <b-nav-item  @click="logout">Logout</b-nav-item>
-            </b-navbar-nav>
-          </b-collapse>
-        </b-navbar>
+        <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav>
+            <b-nav-item>
+              <router-link class="nav-link" to="/users">Users</router-link>
+            </b-nav-item>
+            <b-nav-item>
+              <router-link class="nav-link" to="/meetings">Mettings</router-link>
+            </b-nav-item >
+            <b-nav-item @click="logout" class="nav-link">Logout</b-nav-item>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
       <div class="main-content">
         <router-view></router-view>
       </div>
@@ -29,29 +35,32 @@ import firebase from "firebase";
 import store from "./store";
 export default {
   name: "App",
-  methods:{
+  methods: {
     logout() {
       firebase
         .auth()
         .signOut()
         .then(() => {
-            store.dispatch("logout", null);
-            this.info = "nie zalogowany";
-            console.log("logged out"+this.$store.state.admin);
-            this.$router.push("/");
+          store.dispatch("logout", null);
+          this.info = "nie zalogowany";
+          console.log("logged out" + this.$store.state.admin);
+          this.$router.push("/");
         });
-    }
+    },
   },
-  created: function() {
+  created: function () {
     if (this.$store.state.logged !== null) {
+      this.$router.push("/users").catch(()=>{});;
     } else {
       this.$router.push("/");
     }
-  }
+  },
 };
 </script>
 
 <style>
+@import 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900';
+@import 'https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css';
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -161,11 +170,11 @@ a {
   .button-div {
     display: block !important;
   }
-  .flash__message{
-    position: absolute!important;
+  .flash__message {
+    position: absolute !important;
     z-index: 10001;
-    right: 10px!important;
-    top:10px!important;
+    right: 10px !important;
+    top: 10px !important;
   }
 }
 </style>

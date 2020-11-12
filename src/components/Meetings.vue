@@ -11,7 +11,7 @@
             hide-details
           ></v-text-field>
         </v-card-title>
-        <v-data-table :headers="headers" :items="users" :search="search">
+        <v-data-table :headers="headers" :items="meetings" :search="search">
           <template v-slot:[`item.active`]="{ item }">
             <v-simple-checkbox
               @click="setActive(item)"
@@ -27,41 +27,41 @@
 <script>
 import store from "../store";
 export default {
-  name: "Users",
+  name: "Meetings",
   data() {
     return {
-      users: [],
+      meetings: [],
       search: "",
       headers: [
         {
           text: "Name",
           align: "start",
           filterable: false,
-          value: "firstName",
+          value: "name",
         },
-        { text: "Email", value: "email" },
+        { text: "Code", value: "code" },
+        { text: "Address", value: "address" },
         { text: "Aktywny", value: "active" },
       ],
     };
   },
   methods: {
-    getUsers() {
-      db.collection("users").onSnapshot((querySnapshot) => {
-        let allUsers = [];
+    getMettings() {
+      db.collection("events").onSnapshot((querySnapshot) => {
+        let allMeetings = [];
         querySnapshot.forEach((doc) => {
-          allUsers.push(doc.data());
+          allMeetings.push(doc.data());
         });
-
-        this.users = allUsers;
+        this.meetings = allMeetings;
       });
     },
     setActive(item) {
-      db.collection("users")
-        .where("email", "==", item.email)
+      db.collection("events")
+        .where("id", "==", item.id)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            db.collection("users").doc(doc.id).update({
+            db.collection("events").doc(doc.id).update({
               active: item.active,
             });
           });
@@ -69,7 +69,7 @@ export default {
     },
   },
   created() {
-    this.getUsers();
+    this.getMettings();
   },
 };
 </script>
