@@ -1,12 +1,53 @@
 <template>
   <div id="app">
-    <router-view />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <div class="main-wrapper">
+      <div class="navbar-bg"></div>
+        <b-navbar toggleable="lg" type="dark" variant="info" v-if="this.$store.state.logged !== null">
+          <b-navbar-brand href="#">Menu</b-navbar-brand>
+          {{this.$store.state.logged}}
+
+          <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+          <b-collapse id="nav-collapse" is-nav>
+            <b-navbar-nav>
+              <b-nav-item href="#"><router-link to="/users">Users</router-link></b-nav-item>
+              <b-nav-item href="#"><router-link to="/meetings">Mettings</router-link></b-nav-item>
+              <b-nav-item  @click="logout">Logout</b-nav-item>
+            </b-navbar-nav>
+          </b-collapse>
+        </b-navbar>
+      <div class="main-content">
+        <router-view></router-view>
+      </div>
+    </div>
   </div>
 </template>
-
 <script>
+import firebase from "firebase";
+import store from "./store";
 export default {
-  name: "App"
+  name: "App",
+  methods:{
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+            store.dispatch("logout", null);
+            this.info = "nie zalogowany";
+            console.log("logged out"+this.$store.state.admin);
+            this.$router.push("/");
+        });
+    }
+  },
+  created: function() {
+    if (this.$store.state.logged !== null) {
+    } else {
+      this.$router.push("/");
+    }
+  }
 };
 </script>
 

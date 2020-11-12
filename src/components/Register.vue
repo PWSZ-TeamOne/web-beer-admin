@@ -36,9 +36,8 @@
 
 <script>
 import firebase from "firebase";
-import { mapGetters } from "vuex";
-import store from "../store";
 import alert from "../mixins/alert";
+import store from "../store";
 export default {
   name: "Register",
   mixins: [alert],
@@ -58,7 +57,7 @@ export default {
         .then(async result => {
           firebase
             .firestore()
-            .collection("users")
+            .collection("admins")
             .doc(result.user.uid)
             .set({
               userId: result.user.uid,
@@ -73,7 +72,7 @@ export default {
                 role: result.user.role
               };
               store.dispatch("setSession", loginData);
-              this.$router.push({ path: "/" });
+              this.$router.push({ path: "/users" });
             })
             .catch(() => {
               this.alert("Rejestracja nie prawidłowa!", "error");

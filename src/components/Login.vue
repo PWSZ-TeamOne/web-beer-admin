@@ -29,10 +29,6 @@
         <router-link to="/register">
           <button id="register" class="btn-sm btn-info">Zarejestruj się!</button>
         </router-link>
-        <br />
-        <a v-on:click="logout();" class="mr-3">
-          Logout
-        </a>
       </div>
     </div>
   </div>
@@ -40,7 +36,6 @@
 
 <script>
 import firebase from "firebase";
-import { mapGetters, mapMutations, mapActions } from "vuex";
 import store from "../store";
 import alert from "../mixins/alert";
 export default {
@@ -64,7 +59,7 @@ export default {
           if (user) {
             firebase
               .firestore()
-              .collection("users")
+              .collection("admins")
               .where("userId", "==", user.uid)
               .where("role", "==", "admin")
               .get()
@@ -76,6 +71,7 @@ export default {
                 this.info= "zalogowany";
                 this.alert("Logowanie prawidłowe!", "success");
                 console.log('zalogowano');
+                this.$router.push("/users");
               });
           }
         })
@@ -83,18 +79,6 @@ export default {
           this.alert("Logowanie nie prawidłowe, złe dane!", "error");
         });
     },
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-            this.info = "nie zalogowany";
-            store.dispatch("logout", null);
-            console.log("logged out");
-        }).catch(() => {
-            console.log("error of logged out");
-        });
-    }
   }
 };
 </script>
