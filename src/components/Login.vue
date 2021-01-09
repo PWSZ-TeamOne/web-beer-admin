@@ -28,7 +28,9 @@
             required
           />
         </div>
-        <button @click="login" id="login" class="btn-lg btn-light">Sign In</button>
+        <button @click="login" id="login" class="btn-lg btn-light">
+          Sign In
+        </button>
         <br />
         <br />
       </div>
@@ -75,16 +77,17 @@ export default {
                   this.alert("Logged in!", "success");
                   this.$router.push("/users").catch(() => {});
                 });
-                this.alert("You have successfully logged in", "success");
-                this.$router.push("/users").catch(()=>{});
-              };
-          }).catch(() => {
+              this.alert("You have successfully logged in", "success");
+              this.$router.push("/users").catch(() => {});
+            }
+          })
+          .catch(() => {
             this.alert("Invalid data, please check and try again!", "error");
           });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
