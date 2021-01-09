@@ -12,10 +12,10 @@
           ></v-text-field>
         </v-card-title>
         <v-data-table :headers="headers" :items="meetings" :search="search">
-          <template v-slot:[`item.active`]="{ item }">
+          <template v-slot:[`item.adminActive`]="{ item }">
             <v-simple-checkbox
               @click="setActive(item)"
-              v-model="item.active"
+              v-model="item.adminActive"
             ></v-simple-checkbox>
           </template>
         </v-data-table>
@@ -41,7 +41,7 @@ export default {
         },
         { text: "Code", value: "code" },
         { text: "Address", value: "address" },
-        { text: "Aktywny", value: "active" },
+        { text: "Active", value: "adminActive" },
       ],
     };
   },
@@ -62,7 +62,7 @@ export default {
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             db.collection("events").doc(doc.id).update({
-              active: item.active,
+              adminActive: item.adminActive,
             });
           });
         });

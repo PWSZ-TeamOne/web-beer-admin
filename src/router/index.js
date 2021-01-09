@@ -1,4 +1,5 @@
 import Vue from "vue";
+import store from "@/store";
 import Router from "vue-router";
 import Login from "@/components/Login";
 import Register from "@/components/Register";
@@ -7,7 +8,7 @@ import Meetings from "@/components/Meetings";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   //mode: "history",
   base: process.env.BASE_URL,
   routes: [
@@ -25,11 +26,18 @@ export default new Router({
       path: "/users",
       name: "Users",
       component: Users
-    },
-    {
-      path: "/register",
-      name: "Register",
-      component: Register
     }
+    // {
+    //   path: "/register",
+    //   name: "Register",
+    //   component: Register
+    // }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  if ((to.name !== 'Login') && store.state.logged !== true) next({ name: 'Login' })
+  else next()
+});
+
+export default router;

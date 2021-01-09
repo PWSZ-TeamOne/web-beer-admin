@@ -1,13 +1,8 @@
 <template>
   <div>
-    <flash-message
-      transitionIn="animated swing"
-      class="alert-box"
-    ></flash-message>
     <div class="d-flex align-items-center main-box">
       <div class="m-auto login-box">
         <h2>{{ this.text }}</h2>
-        <p class="text-danger">{{ this.info }}</p>
         <br />
         <div class="md-form mb-5 text-left">
           <i class="fas fa-user prefix"></i>
@@ -23,7 +18,7 @@
         </div>
         <div class="md-form mb-5 text-left">
           <i class="fas fa-user prefix"></i>
-          <label for="password">Hasło</label>
+          <label for="password">Password</label>
           <input
             type="password"
             ref="password"
@@ -45,43 +40,50 @@
 import firebase from "firebase";
 import store from "../store";
 import alert from "../mixins/alert";
+import validateLogin from "../mixins/validateLogin";
 export default {
   name: "Login",
-  mixins: [alert],
+  mixins: [alert, validateLogin],
   data() {
     return {
       text: "Sign In",
       password: null,
       email: null,
+      errors: {},
     };
   },
   methods: {
     login() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(async (result) => {
-          let user = result.user;
-          if (user) {
-            firebase
-              .firestore()
-              .collection("admins")
-              .where("userId", "==", user.uid)
-              .where("role", "==", "admin")
-              .get()
-              .then((querySnapshot) => {
-                querySnapshot.forEach(function (doc) {
-                  const userData = doc.data();
-                  store.dispatch("setSession", userData);
+      if (this.checkForm() === true) {
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(this.email, this.password)
+          .then(async (result) => {
+            let user = result.user;
+            if (user) {
+              firebase
+                .firestore()
+                .collection("admins")
+                .where("userId", "==", user.uid)
+                .where("role", "==", "admin")
+                .get()
+                .then((querySnapshot) => {
+                  querySnapshot.forEach(function (doc) {
+                    const userData = doc.data();
+                    store.dispatch("setSession", userData);
+                  });
+                  this.alert("Logged in!", "success");
+                  this.$router.push("/users").catch(() => {});
                 });
                 this.alert("You have successfully logged in", "success");
                 this.$router.push("/users").catch(()=>{});;
               });
           }
         })
-        .catch(() => {
-          this.alert("The email or phone number you’ve entered doesn’t match any account.", "error");
-        });
+          .catch(() => {
+            this.alert("Invalid data, please check and try again!", "error");
+          });
+      }
     },
   },
 };
