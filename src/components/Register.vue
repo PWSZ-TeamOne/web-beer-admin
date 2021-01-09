@@ -4,8 +4,8 @@
       transitionIn="animated swing"
       class="alert-box"
     ></flash-message>
-    <div class="d-flex align-items-center login-box">
-      <div class="m-auto">
+    <div class="d-flex align-items-center main-box">
+      <div class="m-auto register-box">
         <h2>{{ this.text }}</h2>
         <p class="text-danger">{{ this.info }}</p>
         <br />
@@ -33,13 +33,13 @@
             required
           />
         </div>
-        <button @click="register" id="register" class="btn-lg">
+        <button @click="register" id="register" class="btn-lg btn-light">
           Zarejestruj
         </button>
         <br />
         <br />
         <router-link to="/">
-          <button id="login" class="btn-sm btn-info">Zaloguj się!</button>
+          <button id="login" class="btn-lg btn-dark">Zaloguj się!</button>
         </router-link>
       </div>
     </div>
@@ -100,7 +100,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.login-box {
+.main-box {
+  background-color: #e2e2e5;
   height: 100vh;
+}
+.register-box {
+  background-color: #34495e;
+  border-radius: 5px;
+  box-shadow: 0px 0px 30px 0px #666;
+  color: #ecf0f1;
+  padding: 60px;
 }
 </style>
