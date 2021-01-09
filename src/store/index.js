@@ -12,7 +12,7 @@ export default new Vuex.Store({
       email: null,
       role: null
     },
-    logged:null
+    logged: null
   },
   getters: {
     getUser: state => state.admin,

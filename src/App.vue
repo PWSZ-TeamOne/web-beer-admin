@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <flash-message
+      transitionIn="animated swing"
+      class="alert-box"
+    ></flash-message>
     <div class="main-wrapper">
       <div class="navbar-bg"></div>
       <b-navbar
@@ -18,8 +22,10 @@
               <router-link class="nav-link" to="/users">Users</router-link>
             </b-nav-item>
             <b-nav-item>
-              <router-link class="nav-link" to="/meetings">Mettings</router-link>
-            </b-nav-item >
+              <router-link class="nav-link" to="/meetings"
+                >Mettings</router-link
+              >
+            </b-nav-item>
             <b-nav-item @click="logout" class="nav-link">Logout</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
@@ -33,34 +39,35 @@
 <script>
 import firebase from "firebase";
 import store from "./store";
+import alert from "@/mixins/alert";
 export default {
   name: "App",
+  mixins: [alert],
   methods: {
     logout() {
       firebase
         .auth()
         .signOut()
         .then(() => {
+          this.alert("Logged out!", "success");
           store.dispatch("logout", null);
-          this.info = "nie zalogowany";
-          console.log("logged out" + this.$store.state.admin);
           this.$router.push("/");
         });
     },
   },
   created: function () {
     if (this.$store.state.logged !== null) {
-      this.$router.push("/users").catch(()=>{});;
+      this.$router.push("/users").catch(() => {});
     } else {
-      this.$router.push("/");
+      this.$router.push("/").catch(() => {});
     }
   },
 };
 </script>
 
 <style>
-@import 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900';
-@import 'https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css';
+@import "https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900";
+@import "https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css";
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

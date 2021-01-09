@@ -33,14 +33,8 @@ export default {
       users: [],
       search: "",
       headers: [
-        {
-          text: "Name",
-          align: "start",
-          filterable: false,
-          value: "firstName",
-        },
         { text: "Email", value: "email" },
-        { text: "Aktywny", value: "active" },
+        { text: "Active", value: "active" },
       ],
     };
   },
