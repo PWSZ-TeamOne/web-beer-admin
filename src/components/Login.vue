@@ -76,17 +76,15 @@ export default {
                   this.$router.push("/users").catch(() => {});
                 });
                 this.alert("You have successfully logged in", "success");
-                this.$router.push("/users").catch(()=>{});;
-              });
-          }
-        })
-          .catch(() => {
+                this.$router.push("/users").catch(()=>{});
+              };
+          }).catch(() => {
             this.alert("Invalid data, please check and try again!", "error");
           });
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>
