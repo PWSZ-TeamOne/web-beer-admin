@@ -4,14 +4,14 @@
       transitionIn="animated swing"
       class="alert-box"
     ></flash-message>
-    <div class="d-flex align-items-center login-box">
-      <div class="m-auto">
+    <div class="d-flex align-items-center main-box">
+      <div class="m-auto login-box">
         <h2>{{ this.text }}</h2>
         <p class="text-danger">{{ this.info }}</p>
         <br />
         <div class="md-form mb-5 text-left">
-          <i class="fas fa-user prefix grey-text"></i>
-          <label for="nickname">Email</label>
+          <i class="fas fa-user prefix"></i>
+          <label for="email">Email</label>
           <input
             type="email"
             ref="email"
@@ -22,8 +22,8 @@
           />
         </div>
         <div class="md-form mb-5 text-left">
-          <i class="fas fa-user prefix grey-text"></i>
-          <label for="nickname">Hasło</label>
+          <i class="fas fa-user prefix"></i>
+          <label for="password">Hasło</label>
           <input
             type="password"
             ref="password"
@@ -33,11 +33,11 @@
             required
           />
         </div>
-        <button @click="login" id="login" class="btn-lg">Zaloguj</button>
+        <button @click="login" id="login" class="btn-lg btn-light">Zaloguj</button>
         <br />
         <br />
         <router-link to="/register">
-          <button id="register" class="btn-sm btn-info">
+          <button id="register" class="btn-lg btn-dark">
             Zarejestruj się!
           </button>
         </router-link>
@@ -94,7 +94,15 @@ export default {
 </script>
 
 <style scoped>
-.login-box {
+.main-box {
+  background-color: #e2e2e5;
   height: 100vh;
+}
+.login-box {
+  background-color: #34495e;
+  border-radius: 5px;
+  box-shadow: 0px 0px 30px 0px #666;
+  color: #ecf0f1;
+  padding: 60px;
 }
 </style>
