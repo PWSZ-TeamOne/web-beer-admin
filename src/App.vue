@@ -9,10 +9,10 @@
       <b-navbar
         toggleable="lg"
         type="dark"
-        variant="info"
+        variant="dark"
         v-if="this.$store.state.logged !== null"
       >
-        <b-navbar-brand>Menu</b-navbar-brand>
+        <b-navbar-brand>BeerApp Administration Panel</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -30,7 +30,7 @@
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
-      <div class="main-content">
+      <div class="main-content mt-5">
         <router-view></router-view>
       </div>
     </div>
@@ -76,22 +76,22 @@ export default {
   color: #2c3e50;
 }
 button {
-  background-color: #2c3e50;
-  border: 1px solid #2c3e50;
+  background-color: #ecf0f1;
+  border: 1px solid #ecf0f1;
   padding: 15px;
-  color: white;
+  color: #34495e;
   cursor: pointer;
   transition: background-color 300ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
 }
 button:hover {
-  background-color: white;
-  color: black;
+  background-color: #34495e;
+  color: #ecf0f1;
 }
 html {
   overflow-y: hidden;
 }
 body {
-  background-color: white !important;
+  background-color: #e2e2e5 !important;
   font-family: "Montserrat", sans-serif !important;
   min-height: 100vh;
 }
@@ -178,10 +178,14 @@ a {
     display: block !important;
   }
   .flash__message {
-    position: absolute !important;
+    position: fixed !important;
     z-index: 10001;
     right: 10px !important;
     top: 10px !important;
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 10px;
   }
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="d-flex align-items-center login-box">
-      <div class="m-auto">
+    <div class="d-flex align-items-center main-box">
+      <div class="m-auto login-box">
         <h2>{{ this.text }}</h2>
         <br />
         <div class="md-form mb-5 text-left">
-          <i class="fas fa-user prefix grey-text"></i>
-          <label for="nickname">Email</label>
+          <i class="fas fa-user prefix"></i>
+          <label for="email">Email</label>
           <input
             type="email"
             ref="email"
@@ -17,8 +17,8 @@
           />
         </div>
         <div class="md-form mb-5 text-left">
-          <i class="fas fa-user prefix grey-text"></i>
-          <label for="nickname">Password</label>
+          <i class="fas fa-user prefix"></i>
+          <label for="password">Password</label>
           <input
             type="password"
             ref="password"
@@ -28,7 +28,8 @@
             required
           />
         </div>
-        <button @click="login" id="login" class="btn-lg">Sign in</button>
+        <button @click="login" id="login" class="btn-lg btn-light">Sign In</button>
+        <br />
         <br />
       </div>
     </div>
@@ -45,7 +46,7 @@ export default {
   mixins: [alert, validateLogin],
   data() {
     return {
-      text: "Sign in",
+      text: "Sign In",
       password: null,
       email: null,
       errors: {},
@@ -74,8 +75,11 @@ export default {
                   this.alert("Logged in!", "success");
                   this.$router.push("/users").catch(() => {});
                 });
-            }
-          })
+                this.alert("You have successfully logged in", "success");
+                this.$router.push("/users").catch(()=>{});;
+              });
+          }
+        })
           .catch(() => {
             this.alert("Invalid data, please check and try again!", "error");
           });
@@ -86,7 +90,15 @@ export default {
 </script>
 
 <style scoped>
-.login-box {
+.main-box {
+  background-color: #e2e2e5;
   height: 100vh;
+}
+.login-box {
+  background-color: #34495e;
+  border-radius: 5px;
+  box-shadow: 0px 0px 30px 0px #666;
+  color: #ecf0f1;
+  padding: 60px;
 }
 </style>
