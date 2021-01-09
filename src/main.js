@@ -13,7 +13,7 @@ require("firebase/firestore");
 Vue.use(BootstrapVue);
 
 const config = {
-  //place
+  //place for firebase config
 };
 
 

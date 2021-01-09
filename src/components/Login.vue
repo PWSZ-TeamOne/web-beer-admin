@@ -33,14 +33,9 @@
             required
           />
         </div>
-        <button @click="login" id="login" class="btn-lg btn-light">Zaloguj</button>
+        <button @click="login" id="login" class="btn-lg btn-light">Sign In</button>
         <br />
         <br />
-        <router-link to="/register">
-          <button id="register" class="btn-lg btn-dark">
-            Zarejestruj się!
-          </button>
-        </router-link>
       </div>
     </div>
   </div>
@@ -55,7 +50,7 @@ export default {
   mixins: [alert],
   data() {
     return {
-      text: "Logowanie",
+      text: "Sign In",
       password: null,
       email: null,
     };
@@ -79,14 +74,13 @@ export default {
                   const userData = doc.data();
                   store.dispatch("setSession", userData);
                 });
-                this.alert("Logowanie prawidłowe!", "success");
-                console.log("zalogowano");
+                this.alert("You have successfully logged in", "success");
                 this.$router.push("/users").catch(()=>{});;
               });
           }
         })
         .catch(() => {
-          this.alert("Logowanie nie prawidłowe, złe dane!", "error");
+          this.alert("The email or phone number you’ve entered doesn’t match any account.", "error");
         });
     },
   },
