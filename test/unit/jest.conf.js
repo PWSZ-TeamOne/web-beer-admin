@@ -1,6 +1,9 @@
 const path = require('path')
 
+
 module.exports = {
+  testEnvironment: 'jsdom',
+  testURL: 'http://localhost',
   rootDir: path.resolve(__dirname, '../../'),
   moduleFileExtensions: [
     'js',
@@ -24,4 +27,5 @@ module.exports = {
     '!src/router/index.js',
     '!**/node_modules/**'
   ]
+
 }
